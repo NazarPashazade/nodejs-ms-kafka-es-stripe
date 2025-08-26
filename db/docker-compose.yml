@@ -1,0 +1,53 @@
+services:
+  product-db-server:
+    image: postgres:alpine
+    container_name: product
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=Database123!
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=product-db
+    volumes:
+      - ./postgres-data/product-db-server:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  order-db-server:
+    image: postgres:alpine
+    container_name: order
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=Database123!
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=order-db
+    volumes:
+      - ./postgres-data/order-db-server:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  user-db-server:
+    image: postgres:alpine
+    container_name: user
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=Database123!
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=user-db
+    volumes:
+      - ./postgres-data/user-db-server:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: unless-stopped
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadminuser@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=Database123!
+    ports:
+      - "8080:80"
+    depends_on:
+      - product-db-server
+      - order-db-server
+      - user-db-server

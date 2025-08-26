@@ -1,0 +1,17 @@
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU2MjA3MDAzLCJleHAiOjE3NTY3MjU0MDN9._3guStPd8vGwCTKqSPUxza-GC3EBZJJuBGSVN6evtOs
+@BASE_URL = http://localhost:3003/api/payment/create-payment
+
+
+### Create Payment
+POST {{BASE_URL}}
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "orderNumber": 195953
+}
+
+
+### Get Payment 
+GET {{BASE_URL}}/195953
+Authorization: Bearer {{TOKEN}}

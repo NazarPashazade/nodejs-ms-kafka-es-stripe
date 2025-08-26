@@ -1,0 +1,39 @@
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU2MjA3MDAzLCJleHAiOjE3NTY3MjU0MDN9._3guStPd8vGwCTKqSPUxza-GC3EBZJJuBGSVN6evtOs
+@BASE_URL = http://localhost:3002/api/orders
+
+
+### Create Order
+POST {{BASE_URL}}
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+
+### Delete Order
+DELETE {{BASE_URL}}/4
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+
+### Get All Orders for Customer
+GET {{BASE_URL}}?customerId=1
+Authorization: Bearer {{TOKEN}}
+
+
+### Get Order by ID
+GET {{BASE_URL}}/1
+Authorization: Bearer {{TOKEN}}
+
+
+### Get Order by Number
+GET {{BASE_URL}}/263830/checkout
+Authorization: Bearer {{TOKEN}}
+
+
+### Update Order Status
+PATCH {{BASE_URL}}/24
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "status": "PENDING"
+}

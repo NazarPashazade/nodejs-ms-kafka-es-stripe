@@ -1,0 +1,43 @@
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU2MjA3MDAzLCJleHAiOjE3NTY3MjU0MDN9._3guStPd8vGwCTKqSPUxza-GC3EBZJJuBGSVN6evtOs
+@BASE_URL = http://localhost:3000/api/products
+
+
+### Create a new product
+POST {{BASE_URL}}
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "name": "XIOMI NOTE",
+  "description": "NOTE 15 Pro",
+  "price": 29,
+  "stock": 100
+}
+
+
+### Update product
+PATCH {{BASE_URL}}/11
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "name": "Iphone 16 Pro"
+}
+
+
+### Delete product
+DELETE {{BASE_URL}}/11
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+
+### Get products by Limit and Offset
+GET {{BASE_URL}}?limit=10&offset=0
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+
+### Get products by Id
+GET {{BASE_URL}}/1
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}

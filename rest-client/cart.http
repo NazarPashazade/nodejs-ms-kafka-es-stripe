@@ -1,0 +1,34 @@
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU2MjA3MDAzLCJleHAiOjE3NTY3MjU0MDN9._3guStPd8vGwCTKqSPUxza-GC3EBZJJuBGSVN6evtOs
+@BASE_URL = http://localhost:3002/api/cart
+
+
+### Add new item to cart
+POST {{BASE_URL}}
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "productId": 1,
+  "qty": 15
+}
+
+
+### Update cart Item
+PATCH {{BASE_URL}}/1
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "qty": 50
+}
+
+
+### Delete cart Item
+DELETE {{BASE_URL}}/1
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+
+### Get cart
+GET {{BASE_URL}}/cart
+Authorization: Bearer {{TOKEN}}

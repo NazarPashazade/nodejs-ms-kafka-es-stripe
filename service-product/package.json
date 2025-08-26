@@ -1,0 +1,45 @@
+{
+  "name": "product-service",
+  "version": "1.0.0",
+  "main": "src/server.ts",
+  "scripts": {
+    "dev": "nodemon",
+    "build": "tsc",
+    "start": "npm run build && node dist/server.js",
+    "clean": "rm -rf dist",
+    "test": "jest --watchAll"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^6.13.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "kafkajs": "^2.2.4",
+    "nodemon": "^3.1.10",
+    "pino": "^9.8.0",
+    "pino-http": "^10.5.0",
+    "pino-pretty": "^13.1.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.9.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
+    "@types/kafkajs": "^1.8.2",
+    "@types/node": "^24.1.0",
+    "@types/rosie": "^0.0.45",
+    "@types/supertest": "^6.0.3",
+    "jest": "^30.0.5",
+    "prisma": "^6.13.0",
+    "rosie": "^2.1.1",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}

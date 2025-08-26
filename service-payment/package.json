@@ -1,0 +1,37 @@
+{
+  "name": "product-service",
+  "version": "1.0.0",
+  "main": "src/server.ts",
+  "scripts": {
+    "dev": "nodemon",
+    "build": "tsc",
+    "start": "npm run build && node dist/server.js",
+    "clean": "rm -rf dist",
+    "test": "jest --watchAll"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "kafkajs": "^2.2.4",
+    "nodemon": "^3.1.10",
+    "pino": "^9.8.0",
+    "pino-http": "^10.5.0",
+    "pino-pretty": "^13.1.1",
+    "stripe": "^18.4.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/kafkajs": "^1.8.2",
+    "@types/node": "^24.1.0",
+    "@types/stripe": "^8.0.416",
+    "dotenv": "^17.2.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}

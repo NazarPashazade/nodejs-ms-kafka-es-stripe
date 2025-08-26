@@ -1,0 +1,28 @@
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU2MjM0MzE3LCJleHAiOjE3NTY3NTI3MTd9.zglourMvMUZG8W-fLcQb232y5-lRynmzxDivUyIcuNc
+@BASE_URL = http://localhost:3001/api/auth
+
+
+### Register user
+POST {{BASE_URL}}/register
+Content-Type: application/json
+
+{
+  "username": "john_doe",
+  "email": "john@example.com",
+  "password": "StrongPass123!"
+}
+
+
+### Login user
+POST {{BASE_URL}}/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "StrongPass123!"
+}
+
+
+### Validate token
+GET {{BASE_URL}}/validate
+Authorization: Bearer {{TOKEN}}
