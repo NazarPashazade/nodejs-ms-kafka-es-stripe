@@ -19,9 +19,9 @@ cartRouter.post("/", RequestAuthorizer, async (req, res, next) => {
       CreateCartRequestSchema
     );
 
-    const result = await service.addNewItemToCart(req.body, user.id, cartRepo);
-
     if (err) return res.status(404).json({ err });
+
+    const result = await service.addNewItemToCart(req.body, user.id, cartRepo);
 
     res.status(201).json(result);
   } catch (error) {

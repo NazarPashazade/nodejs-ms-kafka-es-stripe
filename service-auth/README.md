@@ -1,18 +1,27 @@
-## Set up Database for user-service
+## Setup Database(drizzle + postgres)
 
-### Install dependencies
+1. Create "user-db-server" database if it is not exist
 
-```
-npm install --save-dev pg
-npm install pg
-```
+2. Install Dependencies (Doc: https://orm.drizzle.team/docs/get-started/postgresql-new)
 
-### create user-db-server database
+   ```
+   npm i drizzle-orm pg dotenv
+   npm i -D drizzle-kit tsx @types/pg
+   ```
 
-### run users.sql in that database
+3. Create configuration files:
 
-### adjust .env file:
+   ```
+   ./src/drizzle.config.ts
+   ./db/db-connection.ts (to connect db)
+   ./db/schema/user.ts (to create database schema)
+   ./db/migrations/migration.ts (to run migrations)
+   ```
 
-```
-DATABASE_URL="postgresql://postgres:Database123!@localhost:5432/user-db?schema=public"
-```
+4. Run these commands one by one:
+
+   ```
+   "db:generate": "drizzle-kit generate",
+   "db:migrate": "tsx ./src/db/migrations/migration.ts",
+   "db:push": "drizzle-kit push"
+   ```

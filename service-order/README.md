@@ -1,45 +1,53 @@
 ## Configuration of order-service
 
-### Install runtime dependencies
+1. Install runtime dependencies
 
-```
-npm i express express-rate-limiter dotenv cors
-```
+   ```
+   npm i express express-rate-limiter dotenv cors
+   ```
 
-### Install development dependencies
+2. Install development dependencies
 
-```
-npm install --save-dev typescript ts-node @types/node @types/express @types/cors  nodemon jest ts-jest  @types/jest
-```
+   ```
+   npm install --save-dev typescript ts-node @types/node @types/express @types/cors  nodemon jest ts-jest  @types/jest
+   ```
 
-### Initialize TypeScript configuration
+3. Initialize TypeScript configuration
 
-```
-tsc --init
-```
+   ```
+   tsc --init
+   ```
 
 ---
 
-### Setup Database(drizzle + postgres)
+## Setup Database(drizzle + postgres)
 
-Documentation: https://orm.drizzle.team/docs/get-started/postgresql-new
+1. Create "order-db-server" database if it is not exist
 
-```
-npm i drizzle-orm pg dotenv
-npm i -D drizzle-kit tsx @types/pg
-```
+2. Install Dependencies (Doc: https://orm.drizzle.team/docs/get-started/postgresql-new)
 
-Crete configuration file: src/config/.index.ts
+   ```
+   npm i drizzle-orm pg dotenv
+   npm i -D drizzle-kit tsx @types/pg
+   ```
 
-Create new Migration (Migration folder will be created)
+3. Create configuration files:
 
-Run these commands one by one:
+   ```
+   ./src/drizzle.config.ts
+   ./db/db-connection.ts (to connect db)
+   ./db/schema/order.ts (to create database schema)
+   ./db/schema/cart.ts (to create database schema)
+   ./db/migrations/migration.ts (to run migrations)
+   ```
 
-```
-"db:generate": "drizzle-kit generate",
-"db:migrate": "tsx ./src/db/migrations/migration.ts",
-"db:push": "drizzle-kit push"
-```
+4. Run these commands one by one:
+
+   ```
+   "db:generate": "drizzle-kit generate",
+   "db:migrate": "tsx ./src/db/migrations/migration.ts",
+   "db:push": "drizzle-kit push"
+   ```
 
 Download DTO mapping libraries:
 
