@@ -38,11 +38,11 @@ paymentRouter.post(
 );
 
 paymentRouter.get(
-  "/verify-payment/:orderId",
+  "/verify-payment/:paymentId",
   RequestAuthorizer,
   async (req, res, next) => {
     try {
-      const paymentId = req.params.id;
+      const paymentId = req.params.paymentId;
 
       if (!paymentId) {
         next(new Error("Payment ID is required"));

@@ -1,6 +1,6 @@
-import { CartRepository as repository } from "../repositories/cart.repository";
-import { Cart, CartRepositoryType } from "../types/repository.type";
-import { CartService as service } from "./cart.service";
+import { CartRepository as repository } from "../../repositories/cart.repository";
+import { Cart, CartRepositoryType } from "../../types/repository.type";
+import { CartService as service } from "../cart.service";
 
 describe("Cart Service Tests", () => {
   let repo: CartRepositoryType;

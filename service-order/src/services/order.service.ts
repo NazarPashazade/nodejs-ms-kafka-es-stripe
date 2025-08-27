@@ -3,6 +3,7 @@ import { OrderItemType, OrderWithItems } from "../dto/order-request.dto";
 import {
   CartRepositoryType,
   MessageType,
+  OrderEvent,
   OrderRepositoryType,
   OrderStatus,
 } from "../types";
@@ -108,7 +109,13 @@ const deleteOrder = async (orderId: number, orderRepo: OrderRepositoryType) => {
 
 const handleSubscription = async (message: MessageType) => {
   // Handle the subscription message
-  console.log("handleSubscription called with message: ", message);
+
+  switch (message.event) {
+    case OrderEvent.UPDATE_PAYMENT:
+      console.log(`handleSubscription ${message.event}: `, message);
+    case OrderEvent.CANCEL_ORDER:
+      console.log(`handleSubscription ${message.event}: `, message);
+  }
 };
 
 export const OrderService = {

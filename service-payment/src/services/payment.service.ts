@@ -1,4 +1,5 @@
 import { getOrderDetails, PaymentGateway, PaymentMetadata } from "../utils";
+import { brokerService } from "./broker.service";
 
 const createPayment = async (
   customerId: number,
@@ -43,8 +44,12 @@ const verifyPayment = async (
 ): Promise<any> => {
   try {
     // call payment gateway to verify payment
+    const paymentResponse = await paymentGateway.getPayment(paymentId);
+
     // update Order Status through kafka
-    // return payment status for information
+    await brokerService.sendPaymentUpdateMessage(paymentResponse);
+
+    return { message: "Payment Verified", ...paymentResponse };
   } catch (error) {
     console.error("Failed to verify payment:", error);
     return false;

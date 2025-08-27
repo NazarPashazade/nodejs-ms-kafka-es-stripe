@@ -12,9 +12,8 @@ export const getOrderDetails = async (
   try {
     axios.defaults.headers.common["Authorization"] = token;
 
-    const { data } = await axios.get(
-      `${ORDER_BASE_URL}/${orderNumber}/checkout`
-    );
+    const url = `${ORDER_BASE_URL}/${orderNumber}/checkout`;
+    const { data } = await axios.get(url);
 
     return data as InProcessOrder;
   } catch (err) {

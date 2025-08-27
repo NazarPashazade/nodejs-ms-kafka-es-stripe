@@ -21,6 +21,8 @@ const createPayment = async (
     metadata,
   });
 
+  console.log({ PAYMENT_ID: paymentIntent.id });
+
   return {
     secret: paymentIntent.client_secret as string,
     pubKey: STRIPE_PUBLIC_KEY,
@@ -32,9 +34,13 @@ const getPayment = async (
   paymentId: string
 ): Promise<Record<string, unknown>> => {
   const paymentIntent = await stripe.paymentIntents.retrieve(paymentId);
+
+  const orderNumber = paymentIntent.metadata["orderNumber"];
+
   return {
     status: paymentIntent.status,
     paymentLog: paymentIntent,
+    orderNumber,
   };
 };
 
