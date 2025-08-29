@@ -46,8 +46,9 @@ productRouter.get("/", async (req, res) => {
   try {
     const limit = Number(req.query["limit"] || "10");
     const offset = Number(req.query["offset"] || "0");
+    const search = req.query["search"] as string;
 
-    const result = await productService.getProducts(limit, offset);
+    const result = await productService.getProducts(limit, offset, search);
 
     res.status(200).json(result);
   } catch (error) {

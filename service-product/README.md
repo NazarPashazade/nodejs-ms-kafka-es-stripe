@@ -60,27 +60,27 @@ npm install class-validator class-transformer.
 
 ## Set up Database for product-service
 
-### Install dependencies
+1. Install dependencies
 
-```
-npm install --save-dev prisma
-```
+   ```
+   npm install --save-dev prisma
+   ```
 
-### create schema.prisma and .env files (update values)
+2. create schema.prisma and .env files (update values)
 
-```
-npx prisma init --datasource-provider postgresql
-```
+   ```
+   npm run initialize:prisma
+   ```
 
-Create new Migration (Migration folder will be created)
+3. Create new Migration (Migration folder will be created)
 
-```
-npx prisma migrate dev --name init
-```
+   ```
+   npm run generate:migration
+   ```
 
 ---
 
-Logging
+### Logging
 
 ```
 npm i pino pino-http pino-pretty

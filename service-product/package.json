@@ -7,13 +7,16 @@
     "build": "tsc",
     "start": "npm run build && node dist/server.js",
     "clean": "rm -rf dist",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "initialize:prisma": "npx prisma init --datasource-provider postgresql",
+    "generate:migration": "npx prisma migrate dev --name init"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@elastic/elasticsearch": "^8.19.1",
     "@prisma/client": "^6.13.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
