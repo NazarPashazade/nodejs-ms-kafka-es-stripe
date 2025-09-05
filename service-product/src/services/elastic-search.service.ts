@@ -2,6 +2,7 @@ import { Client } from "@elastic/elasticsearch";
 import { ELASTIC_SEARCH_URL } from "../config";
 import { ProductRequest } from "../dto/product-es.dto";
 import { EventPayload } from "../utils/elastic-search/elastic-search-listener";
+import { logger } from "../utils/logger";
 
 export class ElasticSearchService {
   private _indexName = "product";
@@ -94,7 +95,7 @@ export class ElasticSearchService {
   }
 
   async handleEvents({ event, data }: EventPayload) {
-    console.log(`ElasticSearch - handleEvents: ${event} received: `, data);
+    logger.info(`ElasticSearch - handleEvents: ${event} received: `, data);
 
     switch (event) {
       case "createProduct":

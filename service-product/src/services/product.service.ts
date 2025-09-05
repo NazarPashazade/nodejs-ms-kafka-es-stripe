@@ -4,6 +4,7 @@ import type { ProductRepository } from "../repositories/product.repository";
 import { BrokerOrderMessageType } from "../types/message.type";
 import { AppEventListener } from "../utils/elastic-search/elastic-search-listener";
 import { NotFoundError } from "../utils/error";
+import { logger } from "../utils/logger";
 import { ElasticSearchService } from "./elastic-search.service";
 
 export class ProductService {
@@ -73,17 +74,14 @@ export class ProductService {
    */
   handleBrokerMessage = async (message: any): Promise<void> => {
     const items = (message.data as BrokerOrderMessageType).items;
-
-    console.log(items);
-
     for (const item of items) {
-      console.log(
+      logger.info(
         `Order item: Product ID: ${item.productId}, Quantity: ${item.qty}`
       );
 
       const product = await this.getProduct(item.productId);
 
-      console.log({ product });
+      logger.info({ product });
 
       if (!product) {
         console.error(

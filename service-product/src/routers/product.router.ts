@@ -11,7 +11,7 @@ export const productService = new ProductService(new ProductRepository());
 
 export const brokerService = new BrokerService(productService);
 
-brokerService.initializeBroker();
+// brokerService.initializeBroker();
 
 productRouter.post("/", async (req, res) => {
   try {

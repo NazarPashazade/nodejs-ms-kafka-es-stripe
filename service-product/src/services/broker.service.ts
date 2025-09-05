@@ -3,6 +3,7 @@ import { productService } from "../routers/product.router";
 import { ProductEvent } from "../types";
 import { messageBroker } from "../utils/broker/message-broker";
 import { ProductService } from "./product.service";
+import { logger } from "../utils/logger";
 
 export class BrokerService {
   private producer: Producer | null = null;
@@ -17,13 +18,13 @@ export class BrokerService {
     this.producer = await messageBroker.connectProducer<Producer>();
 
     this.producer.on("producer.connect", () => {
-      console.log("Product Service: Producer connected successfully");
+      logger.info("Product Service: Producer connected successfully");
     });
 
     this.consumer = await messageBroker.connectConsumer<Consumer>();
 
     this.consumer.on("consumer.connect", () => {
-      console.log("Product Service: Consumer connected successfully");
+      logger.info("Product Service: Consumer connected successfully");
     });
 
     // Subscribe
