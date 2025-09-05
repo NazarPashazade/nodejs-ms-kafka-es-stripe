@@ -25,7 +25,8 @@
     "express-winston": "^4.2.0",
     "kafkajs": "^2.2.4",
     "nodemon": "^3.1.10",
-    "winston": "^3.17.0"
+    "winston": "^3.17.0",
+    "winston-elasticsearch": "^0.19.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.9.0",

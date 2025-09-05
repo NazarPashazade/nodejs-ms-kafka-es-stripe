@@ -1,0 +1,45 @@
+@ES_BASE = http://localhost:9200
+@LOG_INDEX_BASE = product-service-logs
+@LOG_INDEX = {{LOG_INDEX_BASE}}-2025.09.05
+@SEARCH = _search
+
+
+### Search all logs
+GET {{ES_BASE}}/{{LOG_INDEX}}/{{SEARCH}}?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+
+### Search logs by level = "info"
+GET {{ES_BASE}}/{{LOG_INDEX}}/{{SEARCH}}?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "term": {
+      "level.keyword": "info"
+    }
+  }
+}
+
+
+### Search logs containing specific event
+GET {{ES_BASE}}/{{LOG_INDEX}}/{{SEARCH}}?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "match": {
+      "message": "ElasticSearch - handleEvents"
+    }
+  }
+}
+
+
+### Delete all logs in this index
+DELETE {{ES_BASE}}/{{LOG_INDEX}}

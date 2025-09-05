@@ -81,7 +81,7 @@ export class ProductService {
 
       const product = await this.getProduct(item.productId);
 
-      logger.info({ product });
+      logger.info(`product details:`, { meta: product });
 
       if (!product) {
         console.error(

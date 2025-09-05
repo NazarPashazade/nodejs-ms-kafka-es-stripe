@@ -95,7 +95,9 @@ export class ElasticSearchService {
   }
 
   async handleEvents({ event, data }: EventPayload) {
-    logger.info(`ElasticSearch - handleEvents: ${event} received: `, data);
+    logger.info(`ElasticSearch - handleEvents: ${event} received: `, {
+      meta: data,
+    });
 
     switch (event) {
       case "createProduct":
