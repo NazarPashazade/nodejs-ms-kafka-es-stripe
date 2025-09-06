@@ -1,11 +1,7 @@
 import { LogLevel, createLogger } from "np-express-winston-logger";
-import { ELASTIC_SEARCH_URL } from "../../config";
 
 export const { logger, httpLogger } = createLogger({
-  serviceName: "product-service",
+  serviceName: "auth-service",
   level: LogLevel.INFO,
   enableConsole: true,
-  elasticsearch: {
-    url: ELASTIC_SEARCH_URL,
-  },
 });

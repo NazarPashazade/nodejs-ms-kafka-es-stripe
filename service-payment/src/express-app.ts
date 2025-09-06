@@ -1,8 +1,7 @@
 import * as cors from "cors";
 import * as express from "express";
-import { httpLogger } from "./utils/logger";
-import { brokerService } from "./services/broker.service";
 import { paymentRouter } from "./routers/payment.router";
+import { httpLogger } from "./utils/logger";
 
 export const expressApp = async () => {
   const app = express();

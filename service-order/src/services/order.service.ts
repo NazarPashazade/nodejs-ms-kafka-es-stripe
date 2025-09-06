@@ -7,6 +7,7 @@ import {
   OrderRepositoryType,
   OrderStatus,
 } from "../types";
+import { logger } from "../utils";
 import { brokerService } from "./broker.service";
 
 const createOrder = async (
@@ -108,13 +109,17 @@ const deleteOrder = async (orderId: number, orderRepo: OrderRepositoryType) => {
 };
 
 const handleSubscription = async (message: MessageType) => {
-  // Handle the subscription message
-
   switch (message.event) {
     case OrderEvent.UPDATE_PAYMENT:
-      console.log(`handleSubscription ${message.event}: `, message);
+      logger.info(
+        `UPDATE_PAYMENT handleSubscription ${message.event}: `,
+        message
+      );
     case OrderEvent.CANCEL_ORDER:
-      console.log(`handleSubscription ${message.event}: `, message);
+      logger.info(
+        `CANCEL_ORDER handleSubscription ${message.event}: `,
+        message
+      );
   }
 };
 

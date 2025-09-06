@@ -96,7 +96,7 @@ export class ElasticSearchService {
 
   async handleEvents({ event, data }: EventPayload) {
     logger.info(`ElasticSearch - handleEvents: ${event} received: `, {
-      meta: data,
+      data,
     });
 
     switch (event) {

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { validateUser } from "../utils";
+import { logger, validateUser } from "../utils";
 
 export const RequestAuthorizer = async (
   req: Request,
@@ -20,7 +20,7 @@ export const RequestAuthorizer = async (
 
     next();
   } catch (error) {
-    console.log("error", error);
+    logger.error("Auth error: ", { error });
     return res.status(403).json({ error });
   }
 };

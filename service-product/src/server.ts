@@ -9,7 +9,7 @@ export const startServer = async () => {
 
   process.on("uncaughtException", (error) => {
     logger.error(error);
-    process.exit(1); // Exit the process with a failure code
+    process.exit(1);
   });
 };
 

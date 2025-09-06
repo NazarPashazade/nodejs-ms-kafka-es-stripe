@@ -2,6 +2,7 @@ import { Consumer, Kafka, logLevel, Partitioners, Producer } from "kafkajs";
 import { BROKERS, CLIENT_ID, GROUP_ID } from "../../config";
 import { MessageType, OrderEvent, TOPIC_TYPE } from "../../types";
 import { MessageBrokerType, MessageHandler, PublishType } from "./broker.type";
+import { logger } from "../logger";
 
 const kafka = new Kafka({
   clientId: CLIENT_ID,
@@ -42,7 +43,7 @@ const connectProducer = async <T>(): Promise<T> => {
       createPartitioner: Partitioners.DefaultPartitioner,
     });
     await producer.connect();
-    console.log("New Producer was created...");
+    logger.info("New Producer was created...");
   }
 
   return producer as T;
@@ -69,7 +70,7 @@ const publish = async (data: PublishType): Promise<boolean> => {
     ],
   });
 
-  console.log(`Published Result: `, result);
+  logger.info(`Published Result: `, result);
 
   return !!result;
 };
@@ -78,7 +79,7 @@ const connectConsumer = async <T>(): Promise<T> => {
   if (!consumer) {
     consumer = kafka.consumer({ groupId: GROUP_ID });
     await consumer.connect();
-    console.log("New Consumer was created...");
+    logger.info("New Consumer was created...");
   }
 
   return consumer as T;
