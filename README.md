@@ -18,8 +18,11 @@ Microservices & Kafka & Elastic Search & Node.js
 - **Product service:** `http://localhost:3003/api/products`
 - **Order service:** `http://localhost:3001/api/orders`
 - **Payment service:** `http://localhost:3002/api/payment`
-- **PGAdmin UI:** `http://localhost:8080`
+- **Elasticsearch:** `http://localhost:9200`
+
+- **PGAdmin Dashboard:** `http://localhost:8080`
 - **Stripe Dashboard:** `https://dashboard.stripe.com`
+- **Kibana Dashboard:** `http://localhost:5601`
 
 ## Getting Started
 
