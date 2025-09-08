@@ -26,8 +26,6 @@
 
     "experimentalDecorators": true,
 
-    "verbatimModuleSyntax": false,
-
-    "types": ["jest"]
+    "verbatimModuleSyntax": false
   }
 }
