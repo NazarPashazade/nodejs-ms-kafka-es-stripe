@@ -19,7 +19,7 @@
     "express": "^5.1.0",
     "kafkajs": "^2.2.4",
     "nodemon": "^3.1.10",
-    "np-express-winston-logger": "^1.0.5",
+    "np-express-winston-logger": "^1.0.39",
     "stripe": "^18.4.0"
   },
   "devDependencies": {

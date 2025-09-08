@@ -1,6 +1,6 @@
 @ES_BASE = http://localhost:9200
 @LOG_INDEX_BASE = product-service-logs
-@LOG_INDEX = {{LOG_INDEX_BASE}}-2025.09.05
+@LOG_INDEX = {{LOG_INDEX_BASE}}-2025.09.08
 @SEARCH = _search
 
 
