@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [auth, order, product, payment]
+        service: [service-auth, service-order, service-product, service-payment]
 
     steps:
       - name: Checkout code
@@ -28,11 +28,11 @@ jobs:
         run: sleep 20
 
       - name: Build Docker image
-        run: docker build --target builder -t ${{ matrix.service }}-ci:latest ${{ matrix.service }}
+        run: docker build --target builder -t ${{ matrix.service }}-ci:latest ./${{ matrix.service }}
 
       # - name: Run tests
       #   run: docker run --rm --network host ${{ matrix.service }}-ci:latest npm test
 
       - name: Stop dependency services
-        run: docker-compose down
+        run: docker compose down
         working-directory: ${{ github.workspace }}
