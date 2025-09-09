@@ -9,20 +9,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout repository
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 2️⃣ Set up Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
+      # 3️⃣ Install Railway CLI
       - name: Install Railway CLI
         run: curl -fsSL https://railway.app/install.sh | sh
 
+      # 4️⃣ Deploy service-auth to Railway
       - name: Deploy service-auth
         working-directory: ./service-auth
         env:
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
+          RAILWAY_PROJECT: 2fc979e6-3249-4628-9a6b-f95380490903
+          RAILWAY_ENVIRONMENT: CI
         run: |
-          railway up --detach --environment CI
+          railway up --detach
