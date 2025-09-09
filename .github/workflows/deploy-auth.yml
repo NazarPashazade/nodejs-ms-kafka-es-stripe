@@ -28,5 +28,6 @@ jobs:
         working-directory: ./service-auth
         env:
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
+          RAILWAY_PROJECT: 2fc979e6-3249-4628-9a6b-f95380490903
           RAILWAY_ENVIRONMENT: CI
         run: railway up --detach
