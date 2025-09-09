@@ -23,13 +23,13 @@ jobs:
       - name: Install Railway CLI
         run: curl -fsSL https://railway.app/install.sh | sh
 
-      # 4️⃣ Authenticate and link Railway project
-      - name: Login & Link Railway project
+      # 4️⃣ Link Railway project (CI environment)
+      - name: Link Railway project
         working-directory: ./service-auth
         env:
           RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
         run: |
-          railway login --apiKey $RAILWAY_API_TOKEN
+          # No --apiKey needed; CLI reads token from environment
           railway link --project 2fc979e6-3249-4628-9a6b-f95380490903 --environment CI
 
       # 5️⃣ Deploy service-auth
