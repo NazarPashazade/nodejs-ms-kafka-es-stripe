@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  user-db-server:
+    image: postgres:alpine
+    container_name: service-auth-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Database123!
+      POSTGRES_DB: user-db
+    volumes:
+      - ./postgres-data/user-db-server:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+
+  service-auth:
+    build: .
+    container_name: service-auth
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+    depends_on:
+      - user-db-server
