@@ -9,7 +9,8 @@
     "clean": "rm -rf dist",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx ./src/db/migrations/migration.ts",
-    "db:push": "drizzle-kit push"
+    "db:push:local": "drizzle-kit push",
+    "db:push": "drizzle-kit push --config /usr/src/app/drizzle.config.ts"
   },
   "keywords": [],
   "author": "",

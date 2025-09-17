@@ -22,5 +22,8 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3001
+      DATABASE_URL: postgresql://postgres:Database123!@service-auth-db:5432/user-db?schema=public
+    env_file:
+      - .env
     depends_on:
       - user-db-server
