@@ -1,4 +1,4 @@
-name: Deploy Auth Service to Railway
+name: Deploy Auth Service to VPS
 
 on:
   push:
@@ -12,27 +12,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
         with:
-          node-version: 20
+          ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
-      - name: Install Railway CLI
-        run: curl -fsSL https://railway.app/install.sh | sh
-
-      - name: Railway login
-        env:
-          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
-        run: railway login
-
-      - name: Link Railway project
-        working-directory: ./service-auth
-        env:
-          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
-        run: echo "y" | railway link --project 2fc979e6-3249-4628-9a6b-f95380490903 --environment CI
-
-      - name: Deploy service-auth
-        working-directory: ./service-auth
-        env:
-          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
-        run: railway up --detach
+      - name: Deploy on VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            cd ~/services/service-auth
+            git fetch --all
+            git reset --hard origin/main
+            docker-compose -f docker-compose.auth.yml down
+            docker-compose -f docker-compose.auth.yml up -d --build
+          EOF
