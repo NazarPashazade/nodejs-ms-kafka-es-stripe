@@ -1,17 +1,17 @@
-name: CI - All Microservices
+name: Build Auth Service
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [service-auth] 
+        service: [service-auth]
 
     steps:
       - name: Checkout code
