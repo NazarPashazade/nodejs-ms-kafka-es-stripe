@@ -58,6 +58,7 @@ jobs:
             git fetch --all
             git reset --hard origin/main
             git clean -fd
+            docker-compose -f docker-compose.auth.yml down --remove-orphans
             docker-compose -f docker-compose.auth.yml build --no-cache
             docker-compose -f docker-compose.auth.yml up -d
           EOF
