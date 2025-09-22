@@ -1,4 +1,4 @@
-name: Build Auth Service
+name: Auth Service CI/CD
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build-test:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -30,9 +30,33 @@ jobs:
       - name: Build Docker image
         run: docker build --target builder -t ${{ matrix.service }}-ci:latest ./${{ matrix.service }}
 
+      # Uncomment if you want tests
       # - name: Run tests
       #   run: docker run --rm --network host ${{ matrix.service }}-ci:latest npm test
 
       - name: Stop dependency services
         run: docker compose down
         working-directory: ${{ github.workspace }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
+
+      - name: Deploy on VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            cd ~/services/service-auth
+            git fetch --all
+            git reset --hard origin/main
+            docker-compose -f docker-compose.auth.yml down
+            docker-compose -f docker-compose.auth.yml up -d --build
+          EOF
