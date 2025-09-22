@@ -57,6 +57,7 @@ jobs:
             cd ~/services/service-auth
             git fetch --all
             git reset --hard origin/main
-            docker-compose -f docker-compose.auth.yml down
-            docker-compose -f docker-compose.auth.yml up -d --build
+            git clean -fd
+            docker-compose -f docker-compose.auth.yml build --no-cache
+            docker-compose -f docker-compose.auth.yml up -d
           EOF
