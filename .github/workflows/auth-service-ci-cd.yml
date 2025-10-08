@@ -20,23 +20,26 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      # 🧱 Start only the dependencies for service-auth
       - name: Start dependency services
-        run: docker compose up -d
-        working-directory: ${{ github.workspace }}
+        run: docker compose -f docker-compose.auth.yml up -d
+        working-directory: ${{ github.workspace }}/services/${{ matrix.service }}
 
       - name: Wait for services
-        run: sleep 20
+        run: sleep 15
 
+      # 🛠️ Build only the service-auth image
       - name: Build Docker image
-        run: docker build --target builder -t ${{ matrix.service }}-ci:latest ./${{ matrix.service }}
+        run: docker build --target builder -t ${{ matrix.service }}-ci:latest .
+        working-directory: ${{ github.workspace }}/services/${{ matrix.service }}
 
-      # Uncomment if you want tests
+      # ✅ Optional test step
       # - name: Run tests
       #   run: docker run --rm --network host ${{ matrix.service }}-ci:latest npm test
 
       - name: Stop dependency services
-        run: docker compose down
-        working-directory: ${{ github.workspace }}
+        run: docker compose -f docker-compose.auth.yml down
+        working-directory: ${{ github.workspace }}/services/${{ matrix.service }}
 
   deploy:
     needs: build
@@ -51,6 +54,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
+      # 🚀 Deploy only the service-auth folder
       - name: Deploy on VPS
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
