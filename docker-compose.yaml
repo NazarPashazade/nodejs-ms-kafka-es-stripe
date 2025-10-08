@@ -1,0 +1,111 @@
+version: "2"
+
+services:
+  product-db-server:
+    image: postgres:alpine
+    container_name: product-db-server
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=Database123!
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=product-db
+    volumes:
+      - ./postgres-data/product-db-server:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  order-db-server:
+    image: postgres:alpine
+    container_name: order-db-server
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=Database123!
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=order-db
+    volumes:
+      - ./postgres-data/order-db-server:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  user-db-server:
+    image: postgres:alpine
+    container_name: user-db-server
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=Database123!
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=user-db
+    volumes:
+      - ./postgres-data/user-db-server:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: unless-stopped
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadminuser@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=Database123!
+    ports:
+      - "8080:80"
+    depends_on:
+      - product-db-server
+      - order-db-server
+      - user-db-server
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:9092"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://localhost:9092"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "9092:9092"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false # disable auth for dev
+      - xpack.security.transport.ssl.enabled=false
+      - node.name=elasticsearch
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g # JVM heap settings
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
+volumes:
+  es_data:
+    driver: local
