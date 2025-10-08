@@ -20,28 +20,23 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Create temporary .env file
-        run: |
-          echo "NODE_ENV=ci" > .env
-          echo "PORT=3001" >> .env
-        working-directory: ${{ github.workspace }}/service-auth
-
-      # 👇 Only change: run compose from service-auth folder
       - name: Start dependency services
-        run: docker compose -f docker-compose.auth.yml up -d
-        working-directory: ${{ github.workspace }}/service-auth
+        run: docker compose up -d
+        working-directory: ${{ github.workspace }}
 
       - name: Wait for services
         run: sleep 20
 
-      # 👇 Adjusted build path to point to service-auth correctly
       - name: Build Docker image
-        run: docker build --target builder -t ${{ matrix.service }}-ci:latest .
-        working-directory: ${{ github.workspace }}/service-auth
+        run: docker build --target builder -t ${{ matrix.service }}-ci:latest ./${{ matrix.service }}
+
+      # Uncomment if you want tests
+      # - name: Run tests
+      #   run: docker run --rm --network host ${{ matrix.service }}-ci:latest npm test
 
       - name: Stop dependency services
-        run: docker compose -f docker-compose.auth.yml down
-        working-directory: ${{ github.workspace }}/service-auth
+        run: docker compose down
+        working-directory: ${{ github.workspace }}
 
   deploy:
     needs: build

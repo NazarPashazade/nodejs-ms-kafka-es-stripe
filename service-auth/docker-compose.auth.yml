@@ -10,9 +10,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Database123!
       POSTGRES_DB: user-db
-    # 👇 Disable volume mounting when running in CI (GitHub Actions)
     volumes:
-      - ${DISABLE_DB_VOLUME:-./postgres-data/user-db-server}:/var/lib/postgresql/data
+      - ./postgres-data/user-db-server:/var/lib/postgresql/data
     ports:
       - "5434:5432"
 
