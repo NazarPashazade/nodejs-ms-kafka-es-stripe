@@ -20,6 +20,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      # 👇 Only change: run compose from service-auth folder
       - name: Start dependency services
         run: docker compose -f docker-compose.auth.yml up -d
         working-directory: ${{ github.workspace }}/service-auth
@@ -27,16 +28,14 @@ jobs:
       - name: Wait for services
         run: sleep 20
 
+      # 👇 Adjusted build path to point to service-auth correctly
       - name: Build Docker image
-        run: docker build --target builder -t ${{ matrix.service }}-ci:latest ./${{ matrix.service }}
-
-      # Uncomment if you want tests
-      # - name: Run tests
-      #   run: docker run --rm --network host ${{ matrix.service }}-ci:latest npm test
+        run: docker build --target builder -t ${{ matrix.service }}-ci:latest .
+        working-directory: ${{ github.workspace }}/service-auth
 
       - name: Stop dependency services
-        run: docker compose down
-        working-directory: ${{ github.workspace }}
+        run: docker compose -f docker-compose.auth.yml down
+        working-directory: ${{ github.workspace }}/service-auth
 
   deploy:
     needs: build
