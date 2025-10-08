@@ -19,10 +19,16 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # 3️⃣ Start dependencies (using docker-compose inside service-auth folder)
+      # 3️⃣ Start dependency services with env from GitHub Secrets
       - name: Start dependency services
-        run: docker compose -f docker-compose.auth.yml up -d
+        run: |
+          docker compose -f docker-compose.auth.yml up -d
         working-directory: ${{ github.workspace }}/service-auth
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          OTHER_SECRET: ${{ secrets.OTHER_SECRET }}
+          # add all env variables your compose file needs
 
       # 4️⃣ Wait for services to start
       - name: Wait for services
@@ -69,3 +75,7 @@ jobs:
             docker-compose -f docker-compose.auth.yml build --no-cache
             docker-compose -f docker-compose.auth.yml up -d
           EOF
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          OTHER_SECRET: ${{ secrets.OTHER_SECRET }}
