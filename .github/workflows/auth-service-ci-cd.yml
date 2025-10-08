@@ -9,43 +9,35 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [service-auth]
 
     steps:
-      # 1️⃣ Checkout repo
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2️⃣ Setup Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # 3️⃣ Start dependency services with env from GitHub Secrets
+      # Start dependency services inside service-auth folder
       - name: Start dependency services
-        run: |
-          docker compose -f docker-compose.auth.yml up -d
+        run: docker compose up -d
         working-directory: ${{ github.workspace }}/service-auth
-        env:
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASS: ${{ secrets.DB_PASS }}
-          OTHER_SECRET: ${{ secrets.OTHER_SECRET }}
-          # add all env variables your compose file needs
 
-      # 4️⃣ Wait for services to start
       - name: Wait for services
-        run: sleep 15
+        run: sleep 20
 
-      # 5️⃣ Build Docker image for service-auth
       - name: Build Docker image
-        run: docker build --target builder -t service-auth-ci:latest .
+        run: docker build --target builder -t ${{ matrix.service }}-ci:latest .
         working-directory: ${{ github.workspace }}/service-auth
 
-      # 6️⃣ Optional: Run tests
+      # Uncomment if you want tests
       # - name: Run tests
-      #   run: docker run --rm --network host service-auth-ci:latest npm test
+      #   run: docker run --rm --network host ${{ matrix.service }}-ci:latest npm test
 
-      # 7️⃣ Stop dependency services
       - name: Stop dependency services
-        run: docker compose -f docker-compose.auth.yml down
+        run: docker compose down
         working-directory: ${{ github.workspace }}/service-auth
 
   deploy:
@@ -53,17 +45,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2️⃣ Setup SSH for deployment
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
-      # 3️⃣ Deploy service-auth to VPS
       - name: Deploy on VPS
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
@@ -75,7 +64,3 @@ jobs:
             docker-compose -f docker-compose.auth.yml build --no-cache
             docker-compose -f docker-compose.auth.yml up -d
           EOF
-        env:
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASS: ${{ secrets.DB_PASS }}
-          OTHER_SECRET: ${{ secrets.OTHER_SECRET }}
