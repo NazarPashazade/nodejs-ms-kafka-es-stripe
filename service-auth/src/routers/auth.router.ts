@@ -30,7 +30,7 @@ authRouter.post("/login", async (req, res) => {
 
     const accessToken = await service.login(req.body);
 
-    return res.status(200).json({ message: "Successful Login!", accessToken });
+    return res.status(200).json({ message: "Successful Login!!", accessToken });
   } catch (error) {
     res.status(500).json((error as Error).message || "Internal Server Error");
   }

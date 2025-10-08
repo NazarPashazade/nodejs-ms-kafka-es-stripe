@@ -1,7 +1,5 @@
 @TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU2MjM0MzE3LCJleHAiOjE3NTY3NTI3MTd9.zglourMvMUZG8W-fLcQb232y5-lRynmzxDivUyIcuNc
 # @BASE_URL = http://localhost:3001/api/auth
-
-
 @BASE_URL = http://46.62.158.29:3001/api/auth
 
 
